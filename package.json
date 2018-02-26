@@ -1,0 +1,27 @@
+{
+  "name": "feup-asso",
+  "version": "1.0.0",
+  "description": "IoT work",
+  "main": "index.js",
+  "scripts": {
+    "start": "sudo node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/theRickix/feup-asso.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/theRickix/feup-asso/issues"
+  },
+  "homepage": "https://github.com/theRickix/feup-asso#readme",
+  "dependencies": {
+    "cylon": "^1.3.0",
+    "cylon-api-http": "^0.4.1",
+    "cylon-ble": "^0.10.1"
+  },
+  "devDependencies": {
+    "cylon-keyboard": "^0.17.0"
+  }
+}
