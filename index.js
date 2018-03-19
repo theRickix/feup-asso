@@ -1,6 +1,14 @@
 "use strict";
 
 var Cylon = require("cylon");
+var EventSource = require('eventsource');
+var request     = require('request');
+
+var es  = new EventSource('http://127.0.0.1:3000/api/robots/Bot1/events/button_clicked');
+
+es.onmessage = function(e) {
+  console.log(e.data);
+};
 
 // ensure you install the API plugin first:
 // $ npm install cylon-api-http
@@ -19,6 +27,8 @@ Object.keys(bots).forEach(function(name) {
     Cylon.robot({
       name: name,
 
+      events: ['button_clicked'],
+
       connections: {
        keyboard: { adaptor: "keyboard" }
       },
@@ -29,8 +39,17 @@ Object.keys(bots).forEach(function(name) {
 
       work: function(my) {
         my.keyboard.on("a", function() {
+          my.buttonClick("a");
           console.log("a pressed!");
         });
+        my.keyboard.on("b", function() {
+          my.buttonClick("b");
+          console.log(" bpressed!");
+        });
+      },
+
+      buttonClick: function(button) {
+        this.emit('button_clicked',button);
       }
     });
   }
@@ -40,6 +59,7 @@ Object.keys(bots).forEach(function(name) {
       name: name,
 
       sayRelax: function() {
+          console.log(this.name + " says relax");
           return this.name + " says relax";
       },
 
@@ -57,3 +77,4 @@ Object.keys(bots).forEach(function(name) {
 });
 
 Cylon.start();
+
