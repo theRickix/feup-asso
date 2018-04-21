@@ -21,7 +21,8 @@
     "cylon-api-http": "^0.4.1",
     "cylon-api-socketio": "^0.4.0",
     "cylon-ble": "^0.10.1",
-    "eventsource": "^1.0.5"
+    "eventsource": "^1.0.5",
+    "socket.io": "^2.1.0"
   },
   "devDependencies": {
     "cylon-keyboard": "^0.17.0"
