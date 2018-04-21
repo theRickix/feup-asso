@@ -2,7 +2,7 @@
 const io = require('socket.io-client');
 var socket = io.connect('http://localhost:8080');
 
-
+socket.emit('message', 'You are connected!');
 
 /*var Cylon = require("cylon");
 
