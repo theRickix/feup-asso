@@ -14,6 +14,12 @@ var io = require('socket.io')(server);
 
 //Load Cylon
 var Cylon = require("cylon");
+Cylon.api('socketio',
+{
+  host: '0.0.0.0',
+  port: '3000'
+});
+
 
 
 // When a client connects, we note it in the console
