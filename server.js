@@ -22,10 +22,14 @@ io.sockets.on('connection', function (socket) {
 });
 
 
-
+//message should be of type <command options> so we can split and use first msg[0] as state
 io.sockets.on('message',function(message){
 
 	console.log('Received ' + message);
+	var msgarray = message.split(" ");
+	/*switch(){
+
+	}*/
 });
 
 
