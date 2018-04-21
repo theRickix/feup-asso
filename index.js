@@ -1,28 +1,5 @@
 
 
-//server configuration
-const server = require('http').createServer();
-
-const io = require('socket.io')(server, {
-  path: '/test',
-  serveClient: true,
-  // below are engine.IO options
-  pingInterval: 10000,
-  pingTimeout: 5000
-});
-
-server.listen(3000);
-//Event handling TBD
-io.on('connection', (socket) => {
-  socket.emit('an event', { some: 'data' });
-
-  socket.emit('ferret', 'tobi', (data) => {
-    console.log(data); // data will be 'woot'
-  });
-
-
-  });
-
 
 
 //Connection configuration will use Event handling result, needs to be taken from here so it is a module export to use on handling loop
@@ -79,7 +56,7 @@ Object.keys(bots).forEach(function(name) {
       buttonClick: function(button) {
         this.emit('button_clicked',button);
       }
-    });
+    }).start();
   }
 
   if(type == "dummy") {
@@ -99,10 +76,10 @@ Object.keys(bots).forEach(function(name) {
         };
       }
 
-    });
+    }).start();
   }
 
 });
 
-Cylon.start();
+//Cylon.start();
 
