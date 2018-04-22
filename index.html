@@ -1,0 +1,80 @@
+<!doctype html>
+<html>
+  <meta charset="utf-8">
+  <head>
+    <title>Cylon.js Robot Events and Commands</title>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body { font: 13px Helvetica, Arial; }
+      form { background: #000; padding: 3px; position: fixed; bottom: 0; width: 100%; }
+      form input { border: 0; padding: 10px; width: 90%; margin-right: .5%; }
+      form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }
+      #messages { list-style-type: none; margin: 0; padding: 0; }
+      #messages li { padding: 5px 10px; }
+      #messages li:nth-child(odd) { background: #eee; }
+    </style>
+  </head>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.0/socket.io.dev.js"></script>
+  <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+  <script type="text/javascript">
+    var socket;
+    $('document').ready(function() {
+      socket = io.connect('http://localhost:8080');
+
+      socket.emit('message', 'You are connected!');
+      socket.emit('new device',{type: "dummy", name: "Bot1"});
+      socket.emit('new device',{type: "keyboard", name: "Bot2"});
+
+
+      function cylonConn() {
+        var cylon = io.connect('http://localhost:3000/api');
+        var robot = [], device;
+        cylon.on('robots', function(robots) {
+          console.log('List of robots:', robots);
+          console.log('_______________________');
+          robots.forEach(function(element,i) {
+               // Once we have a list of available robots we can use
+               // any of them and connect to their socket.
+               robot[i] = new Object;
+               robot[i].name = element
+               robot[i].socket = io('http://127.0.0.1:3000/api/robots/' + element);
+
+               // Listen to the 'commands' event on device
+               // returns a list of available commands for the device
+               robot[i].socket.on('commands', function(commands) {
+                 robot[i].commands = commands;
+               });
+               // Every time a event is executed the 'event' event
+               // is triggered, returns the name of the event executed
+               // and the value returned
+               robot[i].socket.on('event', function(payload) {
+                 msg = robot[i].name + " triggered '"+payload.name+"' with data '"+payload.data+"'";
+                 console.log('Robot command name ==>', payload.name);
+                 console.log('Robot command data ==>', payload.data);
+                 $('#messages').append($('<li>').text(msg));
+               });
+               // Listen to the 'events' event on device
+               // returns a list of available events for the device
+               robot[i].socket.on('events', function(events) {
+                robot[i].events = events;
+               });
+
+               // We emit 'commands' and 'events' so we can listen
+               // and get the lists of available items
+               robot[i].socket.emit('commands');
+               robot[i].socket.emit('events');
+
+          });
+            
+        });
+        cylon.emit('robots');
+      };
+
+
+      setTimeout(cylonConn, 1000);
+    });
+  </script>
+  <body>
+    <ul id="messages"></ul>
+  </body>
+</html>
