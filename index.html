@@ -29,6 +29,7 @@
       socket.emit('new device',{type: "dummy", name: "Bot1"});
       socket.emit('new device',{type: "keyboard", name: "Bot2"});
       var robot = [];
+      var connections = [];
 
       function cylonConn() {
         var cylon = io.connect('http://localhost:3000/api');
@@ -52,9 +53,16 @@
                // is triggered, returns the name of the event executed
                // and the value returned
                robot[i].socket.on('event', function(payload) {
+                event = payload.name;
                  msg = robot[i].name + " triggered '"+payload.name+"' with data '"+payload.data+"'";
                  console.log('Robot command name ==>', payload.name);
                  console.log('Robot command data ==>', payload.data);
+
+                connections.forEach(function(element,j) {
+                  if(element.device1 == i && robot[element.device1].events[element.event] == event)
+                    robot[element.device2].socket.emit(robot[element.device2].commands[element.command]);
+                });
+
                  $('#messages').append($('<li>').text(msg));
                });
                // Listen to the 'events' event on device
@@ -116,7 +124,7 @@
    $( ".device1" ).change(function() {
      var elem = this;
      var value = this.value;
-     $(elem).closest("td").next().find("select").empty();
+     $(elem).closest("td").next().find("select").find("option").slice(1).remove();
      robot[value].events.forEach(function(element,i) {
 
         
@@ -130,7 +138,7 @@
      $( ".device2" ).change(function() {
        var elem = this;
        var value = this.value;
-       $(elem).closest("td").next().find("select").empty();
+       $(elem).closest("td").next().find("select").find("option").slice(1).remove();
        size = robot[value].commands.length;
        robot[value].commands.forEach(function(element,i) {
         if(i==size-1 || i==size-2)
@@ -143,7 +151,24 @@
         
        });
      
-   });
+    });
+    $("select").change(function() {
+      var allSelected = true;
+      var val = [];
+      var i = 0;
+      $(this).closest("tr").find("option:selected").each(function() {
+        if (this.value == -1)
+          allSelected = false;
+        val[i] = this.value;
+        i++;
+      });
+      if(allSelected) {
+        var i = connections.length;
+        connections[i] = {device1: val[0], event: val[1], device2: val[2], command: val[3]};
+        console.log(connections[i]);
+      }
+
+    });
 
 
 
@@ -185,18 +210,23 @@
             </td>
             <td>
             <select name='deviceEvent0' class="device1">
+              <option disabled selected value="-1">Select</option>
             </select>
             </td>
             <td>
             <select name='event0' class="event">
+              <option disabled selected value="-1">Select</option>
+
             </select>
             </td>
             <td>
             <select name='deviceCommand0' class="device2">
+              <option disabled selected value="-1">Select</option>
             </select>
             </td>
             <td>
             <select name='command0' class="command">
+              <option disabled selected value="-1">Select</option>
             </select>
             </td>
           </tr>

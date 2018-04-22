@@ -84,7 +84,7 @@ io.sockets.on('connection', function (client) {
 
 
     	    toggle: function() {
-    	        console.log('Blinked');
+    	        console.log(this.name + ' just blinked!');
     	        this.emit('blink')
     	    },
 
