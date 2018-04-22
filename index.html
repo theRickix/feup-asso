@@ -28,11 +28,11 @@
       socket.emit('message', 'You are connected!');
       socket.emit('new device',{type: "dummy", name: "Bot1"});
       socket.emit('new device',{type: "keyboard", name: "Bot2"});
-
+      var robot = [];
 
       function cylonConn() {
         var cylon = io.connect('http://localhost:3000/api');
-        var robot = [], device;
+        var device;
         cylon.on('robots', function(robots) {
           console.log('List of robots:', robots);
           console.log('_______________________');
@@ -76,24 +76,35 @@
 
 
       setTimeout(cylonConn, 1000);
-    });
-  </script>
-  <script type="text/javascript">
-    
-         $(document).ready(function(){
+
       var i=1;
      $("#add_row").click(function(){
-      $('#addr'+i).html("<td>"+ (i+1) +"</td><td><input name='name"+i+"' type='text' placeholder='Name' class='form-control input-md'  /> </td><td><input  name='mail"+i+"' type='text' placeholder='Mail'  class='form-control input-md'></td><td><input  name='mobile"+i+"' type='text' placeholder='Mobile'  class='form-control input-md'></td>");
+      $('#row'+i).html("<td>"+ (i+1) +"</td><td><input name='name"+i+"' type='text' placeholder='Name' class='form-control input-md'  /> </td><td><input  name='mail"+i+"' type='text' placeholder='Mail'  class='form-control input-md'></td><td><input  name='mobile"+i+"' type='text' placeholder='Mobile'  class='form-control input-md'></td>");
 
-      $('#tab_logic').append('<tr id="addr'+(i+1)+'"></tr>');
+      $('#tab_logic').append('<tr id="row'+(i+1)+'"></tr>');
       i++; 
   });
      $("#delete_row").click(function(){
        if(i>1){
-     $("#addr"+(i-1)).html('');
+     $("#row"+(i-1)).html('');
      i--;
      }
    });
+     function load() {
+       $(".device").each(function() {
+          var dropdown = this;
+          robot.forEach(function(element,i) {
+            console.log(element.name)
+           $(dropdown).append($("<option>", {
+               text: element.name
+           }));
+          });
+       });
+   }
+
+   setTimeout(load, 2000);
+
+
 
 });
   </script>
@@ -109,32 +120,42 @@
               #
             </th>
             <th class="text-center">
-              Name
+              Device
             </th>
             <th class="text-center">
-              Mail
+              Event
             </th>
             <th class="text-center">
-              Mobile
+              Device
+            </th>
+            <th class="text-center">
+              Command
             </th>
           </tr>
         </thead>
         <tbody>
-          <tr id='addr0'>
+          <tr id='row0'>
             <td>
             1
             </td>
             <td>
-            <input type="text" name='name0'  placeholder='Name' class="form-control"/>
+            <select name='deviceEvent0' class="device">
+            </select>
             </td>
             <td>
-            <input type="text" name='mail0' placeholder='Mail' class="form-control"/>
+            <select name='event0' class="event">
+            </select>
             </td>
             <td>
-            <input type="text" name='mobile0' placeholder='Mobile' class="form-control"/>
+            <select name='deviceCommand0' class="device">
+            </select>
+            </td>
+            <td>
+            <select name='command0' class="command">
+            </select>
             </td>
           </tr>
-                    <tr id='addr1'></tr>
+                    <tr id='row1'></tr>
         </tbody>
       </table>
     </div>
