@@ -52,6 +52,8 @@ io.sockets.on('connection', function (client) {
     	      keyboard: { driver: "keyboard" }
     	    },
 
+    	    commands: {},
+
     	    work: function(my) {
     	      my.keyboard.on("a", function() {
     	        my.buttonClick("a");
@@ -73,29 +75,30 @@ io.sockets.on('connection', function (client) {
     	  Cylon.robot({
     	    name: msg.name,
 
-    	    sayRelax: function() {
-    	        console.log(this.name + " says relax");
-    	        return this.name + " says relax";
+    	    events: ['blink'],
+
+
+    	    toggle: function() {
+    	        console.log('Blinked');
+    	        this.emit('blink')
     	    },
 
     	    work: function(my) {},
 
     	    commands: function() {
     	      return {
-    	        say_relax: this.sayRelax
+    	        toggle: this.toggle
     	      };
     	    }
 
     	  }).start();
-    	}
+    	}	
     });
 
 });
 
 
 //message should be of type <command options> so we can split and use first msg[0] as state
-
-
 
 
 server.listen(port);

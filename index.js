@@ -17,9 +17,10 @@ es.onmessage = function(e) {
 
 // ensure you install the API plugin first:
 // $ npm install cylon-api-http
-Cylon.api("http", {
-  ssl: false
+Cylon.api('socketio',
+{
 });
+
 
 var bots = {
   Bot1: "keyboard",
@@ -81,5 +82,5 @@ Object.keys(bots).forEach(function(name) {
 
 });
 
-//Cylon.start();
+Cylon.start();
 
