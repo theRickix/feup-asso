@@ -91,16 +91,61 @@
      }
    });
      function load() {
-       $(".device").each(function() {
+       $(".device1").each(function() {
           var dropdown = this;
           robot.forEach(function(element,i) {
             console.log(element.name)
            $(dropdown).append($("<option>", {
-               text: element.name
+               text: element.name,
+               value: i
+           }));
+          });
+       });
+       $(".device2").each(function() {
+          var dropdown = this;
+          robot.forEach(function(element,i) {
+            console.log(element.name)
+           $(dropdown).append($("<option>", {
+               text: element.name,
+               value: i
            }));
           });
        });
    }
+
+   $( ".device1" ).change(function() {
+     var elem = this;
+     var value = this.value;
+     $(elem).closest("td").next().find("select").empty();
+     robot[value].events.forEach(function(element,i) {
+
+        
+        $(elem).closest("td").next().find("select").append($("<option>", {
+               text: element,
+               value: i
+           }));
+     });
+    });
+
+     $( ".device2" ).change(function() {
+       var elem = this;
+       var value = this.value;
+       $(elem).closest("td").next().find("select").empty();
+       size = robot[value].commands.length;
+       robot[value].commands.forEach(function(element,i) {
+        if(i==size-1 || i==size-2)
+          return;
+
+        $(elem).closest("td").next().find("select").append($("<option>", {
+                 text: element,
+                 value: i
+             }));
+        
+       });
+     
+   });
+
+
 
    setTimeout(load, 2000);
 
@@ -139,7 +184,7 @@
             1
             </td>
             <td>
-            <select name='deviceEvent0' class="device">
+            <select name='deviceEvent0' class="device1">
             </select>
             </td>
             <td>
@@ -147,7 +192,7 @@
             </select>
             </td>
             <td>
-            <select name='deviceCommand0' class="device">
+            <select name='deviceCommand0' class="device2">
             </select>
             </td>
             <td>
