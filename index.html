@@ -13,9 +13,12 @@
       #messages li { padding: 5px 10px; }
       #messages li:nth-child(odd) { background: #eee; }
     </style>
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.min.js"
+      integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+      crossorigin="anonymous"></script>
     <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
-    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 <!------ Include the above in your HEAD tag ---------->
   </head>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.0/socket.io.dev.js"></script>
@@ -87,7 +90,26 @@
 
       var i=1;
      $("#add_row").click(function(){
-      $('#row'+i).html("<td>"+ (i+1) +"</td><td><input name='name"+i+"' type='text' placeholder='Name' class='form-control input-md'  /> </td><td><input  name='mail"+i+"' type='text' placeholder='Mail'  class='form-control input-md'></td><td><input  name='mobile"+i+"' type='text' placeholder='Mobile'  class='form-control input-md'></td>");
+      $('#row'+i).html("<td>"+ (i+1) +"<td>"+
+            "<select name='deviceEvent"+i+"' class='device"+i+"'>"+
+              "<option disabled selected value='-1'>Select</option>"+
+            "</select>"+
+            "</td>"+
+            "<td>"+
+            "<select name='event"+i+"' class='event'>"+
+              "<option disabled selected value='-1'>Select</option>"+
+            "</select>"+
+            "</td>"+
+            "<td>"+
+            "<select name='deviceCommand"+i+"' class='device'>"+
+              "<option disabled selected value='-1'>Select</option>"+
+            "</select>"+
+            "</td>"+
+            "<td>"+
+            "<select name='command"+i+"' class='command'>"+
+              "<option disabled selected value='-1'>Select</option>"+
+            "</select>"+
+            "</td>");
 
       $('#tab_logic').append('<tr id="row'+(i+1)+'"></tr>');
       i++; 
