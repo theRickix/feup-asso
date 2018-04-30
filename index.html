@@ -190,7 +190,7 @@
         i++;
       });
       if(allSelected) {
-        var i = connections.length;
+        var i = $(this).closest("tr").attr('id').replace("row", "");
         connections[i] = {device1: val[0], event: val[1], device2: val[2], command: val[3]};
         console.log(connections[i]);
       }
