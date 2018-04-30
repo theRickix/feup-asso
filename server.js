@@ -21,7 +21,7 @@ var io = require('socket.io')(server);
 var Cylon = require("cylon");
 Cylon.api('socketio',
 {
-  host: '0.0.0.0',
+  host: 'localhost',
   port: '3000'
 });
 

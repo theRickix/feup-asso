@@ -26,7 +26,7 @@
   <script type="text/javascript">
     var socket;
     $('document').ready(function() {
-      socket = io.connect('http://localhost:8080');
+      socket = io.connect(window.location.hostname+':8080');
 
       socket.emit('message', 'You are connected!');
       socket.emit('new device',{type: "dummy", name: "Bot1"});
@@ -34,8 +34,9 @@
       var robot = [];
       var connections = [];
 
+
       function cylonConn() {
-        var cylon = io.connect('http://localhost:3000/api');
+        var cylon = io.connect(window.location.hostname+':3000/api');
         var device;
         cylon.on('robots', function(robots) {
           console.log('List of robots:', robots);
@@ -45,7 +46,7 @@
                // any of them and connect to their socket.
                robot[i] = new Object;
                robot[i].name = element
-               robot[i].socket = io('http://127.0.0.1:3000/api/robots/' + element);
+               robot[i].socket = io(window.location.hostname+':3000/api/robots/' + element);
 
                // Listen to the 'commands' event on device
                // returns a list of available commands for the device
