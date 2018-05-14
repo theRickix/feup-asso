@@ -91,29 +91,30 @@
 
       var i=1;
      $("#add_row").click(function(){
-      $('#row'+i).html("<td>"+ (i+1) +"<td>"+
-            "<select name='deviceEvent"+i+"' class='device1 dev1NotLoaded'>"+
-              "<option disabled selected value='-1'>Select</option>"+
-            "</select>"+
-            "</td>"+
-            "<td>"+
-            "<select name='event"+i+"' class='event'>"+
-              "<option disabled selected value='-1'>Select</option>"+
-            "</select>"+
-            "</td>"+
-            "<td>"+
-            "<select name='deviceCommand"+i+"' class='device2 dev2NotLoaded'>"+
-              "<option disabled selected value='-1'>Select</option>"+
-            "</select>"+
-            "</td>"+
-            "<td>"+
-            "<select name='command"+i+"' class='command'>"+
-              "<option disabled selected value='-1'>Select</option>"+
-            "</select>"+
-            "</td>"+
-            "<td><button class='btn glyphicon glyphicon-remove-sign'></button></td>");
 
-      $('#tab_logic').append('<tr id="row'+(i+1)+'"></tr>');
+      $('#tab_logic').append('<tr id="row'+i+'">'+
+        "<td>"+ (i+1) +"<td>"+
+                    "<select name='deviceEvent"+i+"' class='device1 dev1NotLoaded'>"+
+                      "<option disabled selected value='-1'>Select</option>"+
+                    "</select>"+
+                    "</td>"+
+                    "<td>"+
+                    "<select name='event"+i+"' class='event'>"+
+                      "<option disabled selected value='-1'>Select</option>"+
+                    "</select>"+
+                    "</td>"+
+                    "<td>"+
+                    "<select name='deviceCommand"+i+"' class='device2 dev2NotLoaded'>"+
+                      "<option disabled selected value='-1'>Select</option>"+
+                    "</select>"+
+                    "</td>"+
+                    "<td>"+
+                    "<select name='command"+i+"' class='command'>"+
+                      "<option disabled selected value='-1'>Select</option>"+
+                    "</select>"+
+                    "</td>"+
+                    "<td><i class='btn glyphicon glyphicon-remove-sign'></i></td>"+
+        '</tr>');
       i++;
       load();
   });
@@ -143,6 +144,17 @@
        $(".dev1NotLoaded").removeClass("dev1NotLoaded");
        $(".dev2NotLoaded").removeClass("dev2NotLoaded");
    }
+
+   //delete
+   $(document).on('click', '.btn', function() {
+     var elem = this;
+     var index = $(this).closest("tr").attr('id').replace("row", "");
+     
+     if(connections[index] != null)
+      connections[index] = null;
+
+     $("#row"+index).remove();
+    });
 
    $(document).on('change', '.device1', function() {
      var elem = this;
@@ -253,13 +265,11 @@
               <option disabled selected value="-1">Select</option>
             </select>
             </td>
-            <td>
-              
-              <button class="btn glyphicon glyphicon-remove-sign">
-              </button>
+            <td>     
+              <i class="btn glyphicon glyphicon-remove-sign">
+              </i>
             </td>
           </tr>
-                    <tr id='row1'></tr>
         </tbody>
       </table>
     </div>
