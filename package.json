@@ -22,6 +22,7 @@
     "cylon-api-socketio": "^0.4.0",
     "cylon-ble": "^0.10.1",
     "eventsource": "^1.0.5",
+    "request": "^2.85.0",
     "socket.io": "^2.1.0",
     "socket.io-client": "^2.1.0"
   },
