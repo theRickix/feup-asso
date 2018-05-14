@@ -110,18 +110,14 @@
             "<select name='command"+i+"' class='command'>"+
               "<option disabled selected value='-1'>Select</option>"+
             "</select>"+
-            "</td>");
+            "</td>"+
+            "<td><button class='btn glyphicon glyphicon-remove-sign'></button></td>");
 
       $('#tab_logic').append('<tr id="row'+(i+1)+'"></tr>');
       i++;
       load();
   });
-     $("#delete_row").click(function(){
-       if(i>1){
-     $("#row"+(i-1)).html('');
-     i--;
-     }
-   });
+     $
      function load() {
        $(".dev1NotLoaded").each(function() {
           var dropdown = this;
@@ -228,6 +224,7 @@
             <th class="text-center">
               Command
             </th>
+            <th>Delete</th>
           </tr>
         </thead>
         <tbody>
@@ -255,6 +252,11 @@
             <select name='command0' class="command">
               <option disabled selected value="-1">Select</option>
             </select>
+            </td>
+            <td>
+              
+              <button class="btn glyphicon glyphicon-remove-sign">
+              </button>
             </td>
           </tr>
                     <tr id='row1'></tr>
